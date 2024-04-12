@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.exercises.vehicles.core.usecase.vehicles.ListVehiclesUseCaseTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-04-11T11:31:06" hostname="fedora" time="0.006">
-  <properties/>
-  <testcase name="shouldReturnsAllVehicles()" classname="com.exercises.vehicles.core.usecase.vehicles.ListVehiclesUseCaseTest" time="0.006"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>
