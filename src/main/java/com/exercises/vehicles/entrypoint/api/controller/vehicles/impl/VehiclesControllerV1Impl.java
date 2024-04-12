@@ -13,6 +13,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -71,7 +72,7 @@ public class VehiclesControllerV1Impl implements VehiclesControllerV1 {
             }
     )
     @Override
-    public VehicleDomain save(@RequestBody VehicleInputFormDto input) {
+    public VehicleDomain save(@RequestBody @Valid VehicleInputFormDto input) {
         return saveVehiclesUseCase.createOrUpdate(new VehicleInputDto(
                 null,
                 input.brandId(),
@@ -95,7 +96,7 @@ public class VehiclesControllerV1Impl implements VehiclesControllerV1 {
             }
     )
     @Override
-    public VehicleDomain update(@PathVariable("id") Long id, @RequestBody VehicleInputFormDto input) {
+    public VehicleDomain update(@PathVariable("id") Long id, @RequestBody @Valid VehicleInputFormDto input) {
         return saveVehiclesUseCase.createOrUpdate(new VehicleInputDto(
                 id,
                 input.brandId(),
