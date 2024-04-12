@@ -5,6 +5,7 @@ services:
     cap_add:
       - SYS_NICE
     restart: always
+    command: --init-file /docker-entrypoint-initdb.d/init.sql
     environment:
       - MYSQL_DATABASE=vehicles
       - MYSQL_ROOT_PASSWORD=vehicles
