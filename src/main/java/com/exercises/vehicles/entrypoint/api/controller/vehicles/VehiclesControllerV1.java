@@ -9,7 +9,7 @@ import java.util.List;
 public interface VehiclesControllerV1 {
 
 
-    List<VehicleDomain> getAll();
+    List<VehicleDomain> getAll(String brand, Long year, String color);
 
     VehicleDomain getBy(Long id);
 

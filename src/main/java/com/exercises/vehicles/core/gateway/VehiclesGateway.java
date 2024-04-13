@@ -9,6 +9,8 @@ public interface VehiclesGateway {
 
     List<VehicleDomain> findAll();
 
+    List<VehicleDomain> findBy(String brand, Long year, String color);
+
     Optional<VehicleDomain> findBy(Long id);
 
     VehicleDomain createOrUpdate(VehicleDomain vehicle);

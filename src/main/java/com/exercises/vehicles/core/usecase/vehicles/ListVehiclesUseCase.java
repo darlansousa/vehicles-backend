@@ -22,4 +22,8 @@ public class ListVehiclesUseCase {
         return vehiclesGateway.findBy(id).orElseThrow(VehicleNotFoundException::new);
     }
 
+    public List<VehicleDomain> findBy(String brand, Long year, String color) {
+        return vehiclesGateway.findBy(brand, year, color);
+    }
+
 }

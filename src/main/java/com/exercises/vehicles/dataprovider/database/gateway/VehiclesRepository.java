@@ -27,6 +27,13 @@ public class VehiclesRepository implements VehiclesGateway {
     }
 
     @Override
+    public List<VehicleDomain> findBy(String brand, Long year, String color) {
+        return repository.findByBrandNameAndYearAndColor(brand, year, color).stream()
+                .map(mapper::toDomain)
+                .toList();
+    }
+
+    @Override
     public Optional<VehicleDomain> findBy(Long id) {
         return repository.findById(id).map(mapper::toDomain);
     }

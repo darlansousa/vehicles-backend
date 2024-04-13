@@ -42,8 +42,11 @@ public class VehiclesControllerV1Impl implements VehiclesControllerV1 {
             }
     )
     @Override
-    public List<VehicleDomain> getAll() {
-        return listVehiclesUseCase.findAll();
+    public List<VehicleDomain> getAll(
+            @RequestParam(required = false) String brand,
+            @RequestParam(required = false) Long year,
+            @RequestParam(required = false) String color) {
+        return listVehiclesUseCase.findBy(brand, year, color);
     }
 
     @GetMapping("/{id}")
