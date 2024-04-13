@@ -3,6 +3,7 @@ package com.exercises.vehicles.entrypoint.api.controller.vehicles.impl;
 import com.exercises.vehicles.core.domain.vehicles.VehicleDomain;
 import com.exercises.vehicles.core.usecase.vehicles.DeleteVehiclesUseCase;
 import com.exercises.vehicles.core.usecase.vehicles.ListVehiclesUseCase;
+import com.exercises.vehicles.core.usecase.vehicles.PartialUpdateVehiclesUseCase;
 import com.exercises.vehicles.core.usecase.vehicles.SaveVehiclesUseCase;
 import com.exercises.vehicles.core.usecase.vehicles.dto.input.VehicleInputDto;
 import com.exercises.vehicles.entrypoint.api.controller.vehicles.VehiclesControllerV1;
@@ -28,6 +29,7 @@ public class VehiclesControllerV1Impl implements VehiclesControllerV1 {
     private final ListVehiclesUseCase listVehiclesUseCase;
     private final SaveVehiclesUseCase saveVehiclesUseCase;
     private final DeleteVehiclesUseCase deleteVehiclesUseCase;
+    private final PartialUpdateVehiclesUseCase partialUpdateVehiclesUseCase;
 
     @GetMapping
     @Operation(
@@ -120,8 +122,13 @@ public class VehiclesControllerV1Impl implements VehiclesControllerV1 {
             }
     )
     @Override
-    public VehicleDomain partialUpdate(@PathVariable("id") Long id, @RequestBody PartialUpdateInputFormDto input) {
-        return null;
+    public VehicleDomain partialUpdate(@PathVariable("id") Long id, @Valid @RequestBody PartialUpdateInputFormDto input) {
+        return partialUpdateVehiclesUseCase.partialUpdate(
+                id,
+                input.color(),
+                input.description(),
+                input.wasSold()
+        );
     }
 
     @DeleteMapping("/{id}")
@@ -129,9 +136,7 @@ public class VehiclesControllerV1Impl implements VehiclesControllerV1 {
             summary = "Remover veículo",
             description = "Remover um veículo por ID",
             responses = {
-                    @ApiResponse(responseCode = "200", content = {
-                            @Content(schema = @Schema(implementation = VehicleDomain.class))
-                    }),
+                    @ApiResponse(responseCode = "200"),
                     @ApiResponse(responseCode = "424", description = "Violação de regras de negócio")
             }
     )
