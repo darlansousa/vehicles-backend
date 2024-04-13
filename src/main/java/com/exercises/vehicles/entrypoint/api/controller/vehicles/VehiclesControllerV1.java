@@ -1,5 +1,6 @@
 package com.exercises.vehicles.entrypoint.api.controller.vehicles;
 
+import com.exercises.vehicles.core.domain.metrics.Metrics;
 import com.exercises.vehicles.core.domain.vehicles.VehicleDomain;
 import com.exercises.vehicles.entrypoint.api.dto.vehicles.input.PartialUpdateInputFormDto;
 import com.exercises.vehicles.entrypoint.api.dto.vehicles.input.VehicleInputFormDto;
@@ -12,6 +13,8 @@ public interface VehiclesControllerV1 {
     List<VehicleDomain> getAll(String brand, Long year, String color);
 
     VehicleDomain getBy(Long id);
+
+    Metrics getVehicleMetrics();
 
 
     VehicleDomain save(VehicleInputFormDto input);

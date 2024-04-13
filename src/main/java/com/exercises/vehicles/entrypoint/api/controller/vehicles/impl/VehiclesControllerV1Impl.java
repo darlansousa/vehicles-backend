@@ -1,7 +1,9 @@
 package com.exercises.vehicles.entrypoint.api.controller.vehicles.impl;
 
+import com.exercises.vehicles.core.domain.metrics.Metrics;
 import com.exercises.vehicles.core.domain.vehicles.VehicleDomain;
 import com.exercises.vehicles.core.usecase.vehicles.DeleteVehiclesUseCase;
+import com.exercises.vehicles.core.usecase.vehicles.GetVehiclesMetricsUseCase;
 import com.exercises.vehicles.core.usecase.vehicles.ListVehiclesUseCase;
 import com.exercises.vehicles.core.usecase.vehicles.PartialUpdateVehiclesUseCase;
 import com.exercises.vehicles.core.usecase.vehicles.SaveVehiclesUseCase;
@@ -30,6 +32,7 @@ public class VehiclesControllerV1Impl implements VehiclesControllerV1 {
     private final SaveVehiclesUseCase saveVehiclesUseCase;
     private final DeleteVehiclesUseCase deleteVehiclesUseCase;
     private final PartialUpdateVehiclesUseCase partialUpdateVehiclesUseCase;
+    private final GetVehiclesMetricsUseCase getVehiclesMetricsUseCase;
 
     @GetMapping
     @Operation(
@@ -63,6 +66,21 @@ public class VehiclesControllerV1Impl implements VehiclesControllerV1 {
     @Override
     public VehicleDomain getBy(@PathVariable Long id) {
         return listVehiclesUseCase.findBy(id);
+    }
+
+    @GetMapping("/metrics")
+    @Operation(
+            summary = "Recuperar métricas de veículos",
+            description = "Retorna métricas de veículos",
+            responses = {
+                    @ApiResponse(responseCode = "200", content = {
+                            @Content(schema = @Schema(implementation = Metrics.class))
+                    })
+            }
+    )
+    @Override
+    public Metrics getVehicleMetrics() {
+        return getVehiclesMetricsUseCase.getMetrics();
     }
 
     @PostMapping

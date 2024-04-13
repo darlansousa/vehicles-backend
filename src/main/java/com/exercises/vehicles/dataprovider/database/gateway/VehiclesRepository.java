@@ -1,5 +1,7 @@
 package com.exercises.vehicles.dataprovider.database.gateway;
 
+import com.exercises.vehicles.core.domain.metrics.VehicleBrandCount;
+import com.exercises.vehicles.core.domain.metrics.VehicleDecadeCount;
 import com.exercises.vehicles.core.domain.vehicles.VehicleDomain;
 import com.exercises.vehicles.core.gateway.VehiclesGateway;
 import com.exercises.vehicles.dataprovider.database.mapper.VehicleMapper;
@@ -41,6 +43,36 @@ public class VehiclesRepository implements VehiclesGateway {
     @Override
     public VehicleDomain createOrUpdate(VehicleDomain vehicle) {
         return mapper.toDomain(repository.save(mapper.toEntity(vehicle)));
+    }
+
+    @Override
+    public List<VehicleBrandCount> countTotalVehiclesByBrandName() {
+        return repository.countTotalVehiclesByBrandName().stream()
+                .map(it ->  VehicleBrandCount.builder()
+                        .brand(it.getBrandName())
+                        .total(it.getTotal())
+                        .build())
+                .toList();
+    }
+
+    @Override
+    public List<VehicleDecadeCount> countTotalVehiclesByDecade() {
+        return repository.countTotalVehiclesByDecade().stream()
+                .map(it -> VehicleDecadeCount.builder()
+                        .decade(it.getDecade())
+                        .total(it.getTotal())
+                        .build())
+                .toList();
+    }
+
+    @Override
+    public Long contAll() {
+        return repository.count();
+    }
+
+    @Override
+    public Long countByWasSold(Boolean wasSold) {
+        return repository.countByWasSold(wasSold);
     }
 
     @Override
