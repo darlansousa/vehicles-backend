@@ -48,7 +48,7 @@ public class VehiclesRepository implements VehiclesGateway {
     @Override
     public List<VehicleBrandCount> countTotalVehiclesByBrandName() {
         return repository.countTotalVehiclesByBrandName().stream()
-                .map(it ->  VehicleBrandCount.builder()
+                .map(it -> VehicleBrandCount.builder()
                         .brand(it.getBrandName())
                         .total(it.getTotal())
                         .build())
