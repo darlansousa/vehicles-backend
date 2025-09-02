@@ -59,6 +59,9 @@ dependencies {
     // Swagger
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0")
 
+    // Messaging
+    implementation("org.springframework.kafka:spring-kafka")
+
 
     // Testing, Rest Assured
     testImplementation("org.springframework.boot:spring-boot-starter-test")
@@ -67,6 +70,7 @@ dependencies {
     testImplementation("io.rest-assured:rest-assured-common:4.5.1")
     testImplementation("io.rest-assured:xml-path:4.5.1")
     testImplementation("io.rest-assured:rest-assured:4.5.1")
+    testImplementation("org.springframework.kafka:spring-kafka-test")
 
     // Test Dependencies
     testImplementation("org.mockito:mockito-inline:2.13.0")

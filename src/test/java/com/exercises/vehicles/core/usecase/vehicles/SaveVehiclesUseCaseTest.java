@@ -2,8 +2,11 @@ package com.exercises.vehicles.core.usecase.vehicles;
 
 import com.exercises.vehicles.core.domain.vehicles.BrandDomain;
 import com.exercises.vehicles.core.domain.vehicles.VehicleDomain;
+import com.exercises.vehicles.core.domain.vehicles.VehicleStatus;
+import com.exercises.vehicles.core.domain.vehicles.VehicleStatusEvent;
 import com.exercises.vehicles.core.exception.BrandNotFoundException;
 import com.exercises.vehicles.core.gateway.BrandsGateway;
+import com.exercises.vehicles.core.gateway.VehicleStatusPublisherGateway;
 import com.exercises.vehicles.core.gateway.VehiclesGateway;
 import com.exercises.vehicles.core.usecase.vehicles.dto.input.VehicleInputDto;
 import org.jeasy.random.EasyRandom;
@@ -32,6 +35,8 @@ class SaveVehiclesUseCaseTest {
     private VehiclesGateway vehiclesGatewayMock;
     @Mock
     private BrandsGateway brandsGatewayMock;
+    @Mock
+    private VehicleStatusPublisherGateway vehiclePublisherGatewayMock;
 
     @Test
     void shouldCreateOrUpdate() {
@@ -44,6 +49,12 @@ class SaveVehiclesUseCaseTest {
 
         then(brandsGatewayMock).should().findBy(vehicle.brandId());
         then(vehiclesGatewayMock).should().createOrUpdate(domain);
+        then(vehiclePublisherGatewayMock).should().publish(
+                VehicleStatusEvent.builder()
+                        .vehicleId(vehicle.id())
+                        .status(vehicle.wasSold() ? VehicleStatus.SOLD : VehicleStatus.AVAILABLE)
+                        .build()
+        );
     }
 
     @Test
@@ -53,6 +64,7 @@ class SaveVehiclesUseCaseTest {
         assertThrows(BrandNotFoundException.class, ()-> subject.createOrUpdate(vehicle));
         then(brandsGatewayMock).should().findBy(vehicle.brandId());
         then(vehiclesGatewayMock).shouldHaveNoInteractions();
+        then(vehiclePublisherGatewayMock).shouldHaveNoInteractions();
     }
 
     private static VehicleInputDto buildInput() {

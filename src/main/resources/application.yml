@@ -1,5 +1,5 @@
 server:
-    port: 8080
+    port: 8081
 
 spring:
     jpa:
@@ -15,6 +15,10 @@ spring:
     data:
         jackson:
             property-naming-strategy: SNAKE_CASE
+    kafka:
+        bootstrap-servers: localhost:9094
+        consumer:
+            group-id: vehicles-app
 management:
     endpoint:
         health:
